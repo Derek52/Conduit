@@ -1,2 +1,3 @@
-rootProject.name = 'JadeEngine'
+rootProject.name = 'Conduit'
+include 'Editor'
 
