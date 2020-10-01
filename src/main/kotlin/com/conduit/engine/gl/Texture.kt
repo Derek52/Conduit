@@ -2,32 +2,24 @@ package com.conduit.engine.gl
 
 import com.engine.jade.Node
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL46.*;
+import org.lwjgl.opengl.GL46.*
 import org.lwjgl.stb.STBImage
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
 
-class Texture : Node {
-    private var maxFilter: Int
-    private var minFilter: Int
-    private var path : String
-    var texture : Int = 0
+class Texture(private var path: String, private var minFilter: Int, private var maxFilter: Int) : Node() {
+    var texID : Int = 0
     lateinit var width : IntBuffer
     lateinit var height : IntBuffer
     lateinit var nrChannels : IntBuffer
-
-    constructor(path : String, minFilter : Int, maxFilter : Int){
-        this.path = path
-        this.minFilter = minFilter
-        this.maxFilter = maxFilter
-    }
+    var texture : ByteBuffer? = null
 
     override fun init() {
         super.init()
 
-        val texture : ByteBuffer? = loadTexture()
+        texture = loadTexture()
 
-        this.texture = glGenTextures()
+        this.texID = glGenTextures()
 
         setTextureParams()
 
@@ -46,7 +38,7 @@ class Texture : Node {
 
     fun setTextureParams(){
         glActiveTexture(GL_TEXTURE0) // activate the texture unit first before binding texture
-        glBindTexture(GL_TEXTURE_2D, texture)
+        glBindTexture(GL_TEXTURE_2D, texID)
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, maxFilter)
@@ -55,9 +47,9 @@ class Texture : Node {
     }
 
     private fun loadTexture() : ByteBuffer? {
-        width = BufferUtils.createIntBuffer(1);
-        height = BufferUtils.createIntBuffer(1);
-        nrChannels = BufferUtils.createIntBuffer(1);
+        width = BufferUtils.createIntBuffer(1)
+        height = BufferUtils.createIntBuffer(1)
+        nrChannels = BufferUtils.createIntBuffer(1)
 
         STBImage.stbi_set_flip_vertically_on_load(true)
 
@@ -67,11 +59,13 @@ class Texture : Node {
 
     override fun update() {
         super.update()
-        glBindTexture(GL_TEXTURE_2D, texture)
+        glBindTexture(GL_TEXTURE_2D, texID)
 
     }
 
     override fun dispose() {
         super.dispose()
+        if(texture != null)
+            STBImage.stbi_image_free(texture)
     }
 }

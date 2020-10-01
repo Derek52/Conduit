@@ -1,8 +1,8 @@
 package com.conduit.engine.gl
 
 import org.lwjgl.opengl.GLDebugMessageCallbackI
-import org.lwjgl.opengl.GL46.*;
-class DebugImpl : GLDebugMessageCallbackI {
+import org.lwjgl.opengl.GL46.*
+class GLDebug : GLDebugMessageCallbackI {
 
     override fun invoke(source: Int, type: Int, id : Int, severity: Int, length: Int, message: Long, userParam: Long) {
 

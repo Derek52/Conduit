@@ -1,8 +1,7 @@
 package com.conduit.engine.gl
 
 import com.engine.jade.gl.Buffer
-import org.lwjgl.opengl.GL46.*;
-import java.nio.IntBuffer
+import org.lwjgl.opengl.GL46.*
 
 class ElementBufferObject : Buffer(){
     override fun new() {

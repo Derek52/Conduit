@@ -1,29 +1,18 @@
-package com.engine.jade
+package com.conduit.engine
 
+import com.engine.jade.Node
 import org.lwjgl.glfw.Callbacks
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWWindowSizeCallback
-import org.lwjgl.glfw.GLFWWindowSizeCallbackI
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL46
 import org.lwjgl.system.MemoryUtil
-import java.util.concurrent.ThreadLocalRandom
 
-class Stage {
+class Window(private var width: Int, private var height: Int, private var title: String) {
 
-    lateinit var root : Node;
-    var window: Long = 0;
-
-    private var title: String
-    private var height: Int
-    private var width: Int
-
-    constructor(width: Int, height: Int, title: String){
-        this.width = width;
-        this.height = height;
-        this.title = title;
-    }
+    lateinit var root : Node
+    var window: Long = 0
 
     fun show() {
         init()
@@ -38,7 +27,7 @@ class Stage {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3)
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3)
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE)
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE)
 
 
 
