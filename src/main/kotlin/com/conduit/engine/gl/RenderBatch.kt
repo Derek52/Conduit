@@ -6,12 +6,12 @@ package com.conduit.engine.gl
  */
 
 class RenderBatch {
-    var camera: Camera = Camera()
+    var camera2D: Camera2D = Camera2D()
     lateinit var shader : Shader
     var vertexArrayObject = VertexArrayObject()
     var elementBufferObject = ElementBufferObject()
     constructor(){
-        camera.init()
+        camera2D.init()
         vertexArrayObject.new()
         vertexArrayObject.bind()
         elementBufferObject.new()
