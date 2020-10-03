@@ -9,37 +9,43 @@ import java.io.File
 
 class TexturedQuadDemo : Node() {
 
-    private var texture : Texture = Texture("unnamed.png", GL_NEAREST, GL_NEAREST)
-    private lateinit var batch : RenderBatch
+    private var angle: Float = 0f
+    private var texture : Texture = Texture("zim.jpg", GL_LINEAR, GL_LINEAR)
+
+    private lateinit var renderer : Renderer
     private lateinit var mesh : Mesh
 
     override fun init(){
         super.init()
+        texture.init()
+
         glDebugMessageCallback(GLDebug(), 0)
 
-        batch = RenderBatch()
+        renderer = Renderer()
+        renderer.camera = Camera(300f, 300f)
 
         mesh = Mesh(floatArrayOf(
-                    0.5f, 0.5f,
-                    1f , 1f,
-                    0.5f, -0.5f,
-                    1f, 0f,
-                    -0.5f, -0.5f,
-                    0f, 0f,
-                    -0.5f, 0.5f,
-                    0f, 1f))
+                100f, 100f,
+                0f, 0f,
+                200f, 100f,
+                1f, 0f,
+                200f, 200f,
+                1f, 1f,
+                100f, 200f,
+                0f, 1f
+        ))
 
 
 
-        batch.elementBufferObject.insert(intArrayOf(0, 1, 3, 1, 2, 3))
+        renderer.elementBufferObject.insert(intArrayOf(0, 1, 2, 2, 3, 0))
 
         val shader = Shader(File("shaders/VertexShader.glsl"), File("shaders/FragmentShader.glsl"))
 
         shader.vertexAttribLayout(0, 2, false, 4, 0)
         shader.vertexAttribLayout(2, 2, false, 4, 2)
 
-        texture.init()
-        batch.shader = shader
+
+        renderer.shader = shader
 
         mesh.children.add(texture)
         children.add(mesh)
@@ -49,13 +55,21 @@ class TexturedQuadDemo : Node() {
     override fun update() {
         super.update()
 
-        batch.update()
+        renderer.update()
 
-        val model = Matrix4f()
 
-        batch.shader.setUniformMatrix4f("model",true, model, 16)
-        batch.shader.setUniformMatrix4f("view",true, batch.camera2D.view,16)
-        batch.shader.setUniformMatrix4f("projection", true, batch.camera2D.projection, 16)
+        var view = Matrix4f()
+        //view.translate(0.0f, 0.0f, 0.0f)
+
+        var projection = Matrix4f()
+
+        projection.ortho(0f, 600f,0f, 400f, -1.0f, 1.0f)
+
+        var model = Matrix4f()
+        renderer.shader.setUniformMatrix4f("model",false, model, 16)
+        renderer.shader.setUniformMatrix4f("view",false, view,16)
+        renderer.shader.setUniformMatrix4f("projection", false, projection, 16)
+
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0)
 
@@ -63,14 +77,13 @@ class TexturedQuadDemo : Node() {
 
     override fun dispose() {
         super.dispose()
-        batch.dispose()
-
+        renderer.dispose()
         GLError.list()
     }
 }
 
 fun main() {
-    val stage = Window(300, 300, "Client")
+    val stage = Window(600, 400, "Client")
 
     stage.root = TexturedQuadDemo()
 
