@@ -1,27 +1,24 @@
 package com.conduit.engine.gl
 
+import com.conduit.engine.Node
 import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL20
 import org.lwjgl.opengl.GL43
-import org.lwjgl.opengl.GL46
 import org.lwjgl.opengl.GL46.*;
 import java.io.File
 import java.nio.FloatBuffer
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.logging.Level
-import java.util.logging.Logger
 
-class Shader(vertexShader: File, fragmentShader: File) {
+class Shader(private var vertexShader: File, private var fragmentShader: File) : Node() {
 
 
     var shaderProgram : Int = 0
     var vertexShaderProgram : Int = 0
     var fragmentShaderProgram : Int = 0
-    init {
-        var vertexShaderSource = readFile(vertexShader)
-        var fragmentShaderSource = readFile(fragmentShader)
+    override fun init() {
+        val vertexShaderSource = readFile(vertexShader)
+        val fragmentShaderSource = readFile(fragmentShader)
 
         vertexShaderProgram = createShader(GL_VERTEX_SHADER, vertexShaderSource)
 
@@ -47,17 +44,17 @@ class Shader(vertexShader: File, fragmentShader: File) {
     }
 
     private fun createShader(shaderType : Int, source : String) : Int{
-        var program = glCreateShader(shaderType)
+        val program = glCreateShader(shaderType)
         glShaderSource(program, source)
         glCompileShader(program)
 
         return program
     }
 
-    fun setUniformMatrix4f(uName : String, transpose : Boolean , matrix : Matrix4f, size : Int){
-        var floatBuffer : FloatBuffer = BufferUtils.createFloatBuffer(size)
+    fun setUniformMatrix4f(uniform : String, transpose : Boolean, matrix : Matrix4f, size : Int){
+        val floatBuffer : FloatBuffer = BufferUtils.createFloatBuffer(size)
 
-        var uniformLocation = glGetUniformLocation(shaderProgram, uName)
+        val uniformLocation = glGetUniformLocation(shaderProgram, uniform)
 
         glUniformMatrix4fv(uniformLocation, transpose, matrix.get(floatBuffer))
 
@@ -65,22 +62,21 @@ class Shader(vertexShader: File, fragmentShader: File) {
     }
 
 
-    fun bind() {
+    override fun update() {
         glUseProgram(shaderProgram)
-
     }
 
     private fun readFile(file: File): String {
-        var lines: List<String> = Files.readAllLines(Paths.get(file.absolutePath));
-        var text = "";
+        val lines: List<String> = Files.readAllLines(Paths.get(file.absolutePath))
+        var text = ""
 
         for (string in lines)
-            text += string + "\n";
+            text += string + "\n"
 
-        return text;
+        return text
     }
 
-    fun dispose() {
+    override fun dispose() {
         glDeleteShader(vertexShaderProgram)
         glDeleteShader(fragmentShaderProgram)
     }

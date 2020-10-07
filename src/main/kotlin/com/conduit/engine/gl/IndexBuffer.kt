@@ -1,9 +1,8 @@
 package com.conduit.engine.gl
 
-import com.engine.jade.gl.Buffer
 import org.lwjgl.opengl.GL46.*
 
-class ElementBufferObject : Buffer(){
+class IndexBuffer : Buffer(){
     override fun new() {
         bufferID = glGenBuffers()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferID)

@@ -1,10 +1,9 @@
 package com.conduit.engine.gl
 
-import com.engine.jade.Node
-import com.engine.jade.gl.Buffer
-import org.lwjgl.opengl.GL46.*;
+import org.lwjgl.opengl.GL46.glBindVertexArray
+import org.lwjgl.opengl.GL46.glGenVertexArrays
 
-class VertexArrayObject : Buffer(){
+class VertexArray : Buffer(){
 
     override fun new(){
         bufferID = glGenVertexArrays()

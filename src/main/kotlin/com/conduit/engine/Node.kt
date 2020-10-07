@@ -1,6 +1,8 @@
-package com.engine.jade
+package com.conduit.engine
 
-open class Node() {
+import java.io.Serializable
+
+open class Node() : Serializable {
 
     var children = ArrayList<Node>()
     var id : Int = 0;
@@ -16,6 +18,10 @@ open class Node() {
         checkMessages()
     }
 
+    fun add(node : Node){
+        node.init()
+        children.add(node)
+    }
     open fun dispose(){
         for(node in children)
             node.dispose()
@@ -28,10 +34,10 @@ open class Node() {
     }
 
     private fun checkMessages() {
-        for(command in Command.commands){
-            //if(command.id == id)
-               // println("Message recieved by Node " + command.id)
-        }
+        /*for(command in Command.commands){
+            if(command.id == id)
+               //println("Message recieved by Node " + command.id)
+        }*/
     }
 
 }

@@ -1,4 +1,4 @@
-package com.engine.jade.gl
+package com.conduit.engine.gl
 
 open class Buffer {
     var bufferID : Int = 0

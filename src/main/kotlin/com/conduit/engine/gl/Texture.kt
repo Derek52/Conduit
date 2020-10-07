@@ -1,9 +1,10 @@
 package com.conduit.engine.gl
 
-import com.engine.jade.Node
+import com.conduit.engine.Node
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL46.*
 import org.lwjgl.stb.STBImage
+import org.lwjgl.stb.STBImage.stbi_image_free
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
 
@@ -60,12 +61,10 @@ class Texture(private var path: String, private var minFilter: Int, private var 
     override fun update() {
         super.update()
         glBindTexture(GL_TEXTURE_2D, texID)
-
     }
 
     override fun dispose() {
         super.dispose()
-        if(texture != null)
-            STBImage.stbi_image_free(texture)
+        stbi_image_free(texture as ByteBuffer)
     }
 }

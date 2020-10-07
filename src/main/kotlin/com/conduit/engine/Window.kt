@@ -1,6 +1,5 @@
 package com.conduit.engine
 
-import com.engine.jade.Node
 import org.lwjgl.glfw.Callbacks
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWWindowSizeCallback
@@ -52,14 +51,12 @@ class Window(private var width: Int, private var height: Int, private var title:
 
         while (!glfwWindowShouldClose(window)) {
             GL20.glClear(GL20.GL_COLOR_BUFFER_BIT or GL20.GL_DEPTH_BUFFER_BIT)
-
             root.update()
-
             glfwSwapBuffers(window)
             glfwPollEvents()
         }
-
         root.dispose()
         GL.destroy()
+
     }
 }

@@ -1,11 +1,10 @@
 package com.conduit.engine.gl
 
-import com.engine.jade.gl.Buffer
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL46.*;
 
 
-class VertexBufferObject : Buffer(){
+class VertexBuffer : Buffer(){
     override fun new() {
         bufferID = glGenBuffers()
         glBindBuffer(GL_ARRAY_BUFFER, bufferID)
