@@ -8,4 +8,4 @@ I'm really looking for anyone who has experience with OpenGL, (especially debugg
 and is well-versed in Kotlin. 
 
 
-Thanks for reading.
+Here's the Trello Board https://trello.com/b/hMaBe0Nf/conduit-todo-list
