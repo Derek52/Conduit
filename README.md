@@ -1,5 +1,6 @@
 # Conduit
 Conduit is a simple 2D game engine written in Kotlin. It uses OpenGL as it's backend and currently only works on Desktop.
+It's named after a mysterious artifact in Xenoblade Chronicles 2 that opens portals to new dimensions.
 
 # Features:
 
