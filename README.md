@@ -29,6 +29,8 @@ I don't have enough time to work on this. Especially with School, I'm only worki
 
 If you'd like to help, or have any questions, shoot me a message at stacksite8@gmail.com
 
+In the mean time check out the Demo.kt example to see the working code.
+
 I'll try to get back to you soon. 
 
 
