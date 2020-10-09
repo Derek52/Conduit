@@ -1,11 +1,10 @@
 package com.conduit.engine
 
-import java.io.Serializable
+import java.util.*
 
-open class Node() : Serializable {
+open class Node {
 
     var children = ArrayList<Node>()
-    var id : Int = 0;
     open fun init(){
         for(node in children)
             node.update()
@@ -28,8 +27,6 @@ open class Node() : Serializable {
     }
 
     private fun dispatchMessage() {
-        Command.commands.add(Command(1, "Hello Node 1!"))
-        Command.commands.add(Command(0, "Hello Node 0!"))
 
     }
 

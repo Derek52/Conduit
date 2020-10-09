@@ -17,7 +17,6 @@ class IndexBuffer : Buffer(){
     }
 
     override fun insert(data: Any) {
-        //bind()
         if(data is IntArray)
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, data, GL_DYNAMIC_DRAW)
     }

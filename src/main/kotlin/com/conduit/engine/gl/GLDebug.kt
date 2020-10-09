@@ -1,13 +1,11 @@
 package com.conduit.engine.gl
 
-import org.lwjgl.opengl.GLDebugMessageCallbackI
 import org.lwjgl.opengl.GL46.*
+import org.lwjgl.opengl.GLDebugMessageCallbackI
 class GLDebug : GLDebugMessageCallbackI {
 
     override fun invoke(source: Int, type: Int, id : Int, severity: Int, length: Int, message: Long, userParam: Long) {
-
-
-        GLError.errors.push(GLError("Callback: " + getDebugSource(source) + " " + getDebugType(type), severity))
+        //System.err.println("Debug: " + getDebugSource(source) + " " + getDebugType(type) + " " + severity);
     }
 
     private fun getDebugType(type: Int): String {
@@ -20,7 +18,6 @@ class GLDebug : GLDebugMessageCallbackI {
             GL_DEBUG_TYPE_PUSH_GROUP -> return "GL_DEBUG_TYPE_PUSH_GROUP"
             GL_DEBUG_TYPE_POP_GROUP -> return "GL_DEBUG_TYPE_POP_GROUP"
             GL_DEBUG_TYPE_OTHER -> return "GL_DEBUG_TYPE_OTHER"
-
         }
 
         return ""

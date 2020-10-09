@@ -1,33 +1,37 @@
 package com.conduit.engine.gl
 
 import com.conduit.engine.Node
+import org.lwjgl.opengl.GL46.*
 
 
-open class Mesh(vertices: FloatArray) : Node() {
+open class Mesh(var vertices: FloatArray, var indices: IntArray) : Node() {
 
-    public lateinit var shader : Shader;
     var vertexBuffer : VertexBuffer = VertexBuffer()
-    var elementBufferObject = IndexBuffer()
+    var indexBuffer = IndexBuffer()
 
+    constructor() : this(floatArrayOf(), intArrayOf())
 
-    init {
+    override fun init() {
+        super.init()
+
         vertexBuffer.new()
         vertexBuffer.insert(vertices)
-        elementBufferObject.new()
-        elementBufferObject.insert(intArrayOf(0, 1, 2, 2, 3, 0))
-
+        indexBuffer.new()
+        indexBuffer.insert(indices)
     }
 
     override fun update() {
         super.update()
-        vertexBuffer.bind()
-        elementBufferObject.bind()
 
+        vertexBuffer.bind()
+        indexBuffer.bind()
+        glDrawElements(GL_TRIANGLES, indices.size, GL_UNSIGNED_INT, 0)
     }
 
     override fun dispose() {
         super.dispose()
-        elementBufferObject.clear()
 
+        indexBuffer.clear()
+        vertexBuffer.clear()
     }
 }

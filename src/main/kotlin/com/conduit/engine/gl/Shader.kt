@@ -3,8 +3,7 @@ package com.conduit.engine.gl
 import com.conduit.engine.Node
 import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.GL43
-import org.lwjgl.opengl.GL46.*;
+import org.lwjgl.opengl.GL46.*
 import java.io.File
 import java.nio.FloatBuffer
 import java.nio.file.Files
@@ -31,8 +30,10 @@ class Shader(private var vertexShader: File, private var fragmentShader: File) :
         val fragmentShaderLog : String = glGetShaderInfoLog(fragmentShaderProgram)
 
         if(!(vertexShaderLog.isEmpty() && fragmentShaderLog.isEmpty())){
-            GLError.errors.push(GLError(vertexShaderLog, GL43.GL_DEBUG_SEVERITY_MEDIUM))
+            System.err.println(vertexShaderLog)
+            System.err.println(fragmentShaderLog)
         }
+
     }
 
     private fun createProgram(vertexShaderProgram : Int, fragmentShaderProgram : Int){
